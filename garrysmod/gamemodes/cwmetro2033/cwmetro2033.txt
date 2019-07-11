@@ -1,0 +1,8 @@
+"cwmetro2033"{
+	"title"			"CW: Metro 2033 RP"
+	"Aberidius & The Lion"		"TBA"
+	"description"	"A schema set in the post-apocalyptic world of the Metro universe."
+	"version"		"1.0"
+	"menusystem"	"1"
+	"workshopid"	"0"
+}
