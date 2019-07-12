@@ -8,8 +8,6 @@ function Schema:ClockworkAddSharedVars(globalVars, playerVars)
 	playerVars:Bool("PermaKilled", true);
 	playerVars:Number("Antidepressants", true);
 	playerVars:String("CustomClass");
-	playerVars:String("CitizenID", true);
-	playerVars:Number("Scanner", true);
 	playerVars:Number("IsTied");
 	globalVars:Number("PermaKillMode");
 end;
