@@ -5,10 +5,6 @@
 
 -- Called when Clockwork has loaded all of the entities.
 function Schema:ClockworkInitPostEntity()
-	self:LoadRationDispensers();
-	self:LoadVendingMachines();
-	self:LoadCombineLocks();
-	self:LoadObjectives();
 	self:LoadRadios();
 	self:LoadNPCs();
 end;
@@ -17,10 +13,7 @@ end;
 function Schema:SaveData() end;
 
 -- Called just after data should be saved.
-function Schema:PostSaveData()
-	self:SaveRationDispensers();
-	self:SaveVendingMachines();
-	self:SaveCombineLocks();
+function Schema:PostSaveData();
 	self:SaveRadios();
 	self:SaveNPCs();
 end;
@@ -370,11 +363,8 @@ function Schema:PlayerRestoreCharacterData(player, data)
 	--[[ Backwards Compatability... --]]
 	local compatability = {
 		["permakilled"] = "PermaKilled",
-		["combinedata"] = "CombineData",
-		["nextration"] = "NextRation",
 		["customclass"] = "CustomClass",
 		["frequency"] = "Frequency",
-		["citizenid"] = "CitizenID",
 		["icon"] = "Icon"
 	};
 	
@@ -382,12 +372,6 @@ function Schema:PlayerRestoreCharacterData(player, data)
 		if (data[k]) then
 			data[v] = data[k];
 			data[k] = nil;
-		end;
-	end;
-
-	if (!self:PlayerIsCombine(player) and player:GetFaction() != FACTION_ADMIN) then
-		if (!data["CitizenID"] or string.len(tostring(data["CitizenID"])) == 4) then
-			data["CitizenID"] = Clockwork.kernel:ZeroNumberToDigits(math.random(1, 99999), 5);
 		end;
 	end;
 end;
@@ -437,10 +421,6 @@ end;
 -- Called when a player's character has initialized.
 function Schema:PlayerCharacterInitialized(player)
 	local faction = player:GetFaction();
-	
-	if (faction == FACTION_CITIZEN) then
-		self:AddCombineDisplayLine("RebuildCitizenManifest", Color(255, 100, 255, 255));
-	end;
 end;
 
 -- Called when a player attempts to use an entity in a vehicle.
@@ -776,7 +756,6 @@ end;
 -- Called when a player's shared variables should be set.
 function Schema:PlayerSetSharedVars(player, curTime)
 	player:SetSharedVar("CustomClass", player:GetCharacterData("CustomClass", ""));
-	player:SetSharedVar("CitizenID", player:GetCharacterData("CitizenID", ""));
 	player:SetSharedVar("Icon", player:GetCharacterData("Icon", ""));
 	
 	if (player:Alive() and !player:IsRagdolled() and player:GetVelocity():Length() > 0) then
@@ -905,13 +884,6 @@ function Schema:PlayerDoesHaveFlag(player, flag)
 	end;
 end;
 
--- Called when a player's attribute has been updated.
-function Schema:PlayerAttributeUpdated(player, attributeTable, amount)
-	if (self:PlayerIsCombine(player) and amount and amount > 0) then
-		self:AddCombineDisplayLine({"UpdateExternalAttributes", Clockwork.option:Translate("name_attributes", true)}, Color(255, 125, 0, 255), player);
-	end;
-end;
-
 -- Called to check if a player does recognise another player.
 function Schema:PlayerDoesRecognisePlayer(player, target, status, isAccurate, realValue)
 	if (self:PlayerIsCombine(target) or target:GetFaction() == FACTION_ADMIN) then
@@ -938,8 +910,6 @@ function Schema:PlayerCanUseCommand(player, commandTable, arguments)
 	if (player:GetSharedVar("IsTied") != 0) then
 		local blacklisted = {
 			"OrderShipment",
-			"Broadcast",
-			"Dispatch",
 			"Request",
 			"Radio"
 		};
@@ -952,45 +922,9 @@ function Schema:PlayerCanUseCommand(player, commandTable, arguments)
 	end;
 end;
 
--- Called when a player attempts to use a door.
-function Schema:PlayerCanUseDoor(player, door)
-	if (player:GetSharedVar("IsTied") != 0 or (!self:PlayerIsCombine(player) and player:GetFaction() != FACTION_ADMIN)) then
-		return false;
-	end;
-end;
-
--- Called when a player attempts to lock an entity.
-function Schema:PlayerCanLockEntity(player, entity)
-	if (Clockwork.entity:IsDoor(entity) and IsValid(entity.combineLock)) then
-		if (Clockwork.config:Get("combine_lock_overrides"):Get() or entity.combineLock:IsLocked()) then
-			return false;
-		end;
-	end;
-end;
-
--- Called when a player attempts to unlock an entity.
-function Schema:PlayerCanUnlockEntity(player, entity)
-	if (Clockwork.entity:IsDoor(entity) and IsValid(entity.combineLock)) then
-		if (Clockwork.config:Get("combine_lock_overrides"):Get() or entity.combineLock:IsLocked()) then
-			return false;
-		end;
-	end;
-end;
-
 -- Called when a player's character has unloaded.
 function Schema:PlayerCharacterUnloaded(player)
 	self:ResetPlayerScanner(player);
-end;
-
--- Called when a player attempts to change class.
-function Schema:PlayerCanChangeClass(player, class)
-	if (player:GetSharedVar("IsTied") != 0) then
-		Clockwork.player:Notify(player, {"CannotDoThisWhenTied"});
-		
-		return false;
-	elseif (self:PlayerIsCombine(player)) then
-		return false;
-	end;
 end;
 
 -- Called when a player attempts to use an entity.
@@ -1163,27 +1097,9 @@ end;
 -- Called when chat box info should be adjusted.
 function Schema:ChatBoxAdjustInfo(info)
 	if (IsValid(info.speaker) and info.speaker:HasInitialized()) then
-		if (info.class == "request" or info.class == "radio") then
+		if (info.class == "radio") then
 			info.voice = info.voice or {};
 			info.voice.global = true;
-		end;
-		
-		local playerIsCombine = self:PlayerIsCombine(info.speaker);
-
-		if (playerIsCombine) then
-			info.textTransformer = function(text)
-				local finalText = text;
-
-				if (string.sub(info.text, 1, 4) != "<:: ") then
-					finalText = "<:: " .. finalText;
-				end;
-
-				if (string.sub(info.text, -4) != " ::>") then
-					finalText = finalText .. " ::>";
-				end;
-
-				return finalText;
-			end;
 		end;
 	end;
 end;
@@ -1222,33 +1138,6 @@ end;
 function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
 	if (self:PlayerIsCombine(player)) then
 		local location = self:PlayerGetLocation(player);
-		
-		self:AddCombineDisplayLine("DownloadLostBiosignal", Color(255, 255, 255, 255), nil, player);
-		self:AddCombineDisplayLine({"BiosignalLost", location}, Color(255, 0, 0, 255), nil, player);
-		
-		if (self.scanners[player]) then
-			if (IsValid(self.scanners[player][1])) then
-				if (damageInfo != true) then
-					self.scanners[player][1]:TakeDamage(self.scanners[player][1]:Health() + 100);
-				end;
-			end;
-		end;
-		
-		for k, v in ipairs(_player.GetAll()) do
-			if (self:PlayerIsCombine(v)) then
-				v:EmitSound("npc/overwatch/radiovoice/on1.wav");
-				v:EmitSound("npc/overwatch/radiovoice/lostbiosignalforunit.wav");
-			end;
-		end;
-		
-		timer.Simple(1.5, function()
-			for k, v in ipairs(_player.GetAll()) do
-				if (self:PlayerIsCombine(v)) then
-					v:EmitSound("npc/overwatch/radiovoice/off4.wav");
-				end;
-			end;
-		end);
-	end;
 	
 	if (!player:GetCharacterData("PermaKilled")) then
 		if ((attacker:IsPlayer() or attacker:IsNPC()) and damageInfo) then
@@ -1409,29 +1298,6 @@ function Schema:EntityTakeDamage(entity, damageInfo)
 		if (!player.nextEnduranceTime or CurTime() > player.nextEnduranceTime) then
 			player:ProgressAttribute(ATB_ENDURANCE, math.Clamp(damageInfo:GetDamage(), 0, 75) / 10, true);
 			player.nextEnduranceTime = CurTime() + 2;
-		end;
-		
-		if (self.scanners[player]) then
-			entity:EmitSound("npc/scanner/scanner_pain"..math.random(1, 2)..".wav");
-			
-			if (entity:Health() > 50 and entity:Health() - damageInfo:GetDamage() <= 50) then
-				entity:EmitSound("npc/scanner/scanner_siren1.wav");
-			elseif (entity:Health() > 25 and entity:Health() - damageInfo:GetDamage() <= 25) then
-				entity:EmitSound("npc/scanner/scanner_siren2.wav");
-			end;
-		end;
-		
-		if (attacker:IsPlayer() and self:PlayerIsCombine(player)) then
-			if (attacker != player) then
-				local location = Schema:PlayerGetLocation(player);
-				
-				if (!player.nextUnderFire or curTime >= player.nextUnderFire) then
-					player.nextUnderFire = curTime + 15;
-					
-					Schema:AddCombineDisplayLine("DownloadTraumaPacket", Color(255, 255, 255, 255), nil, player);
-					Schema:AddCombineDisplayLine({"ProtectionTeamBodilyHarm", location}, Color(255, 0, 0, 255), nil, player);
-				end;
-			end;
 		end;
 	end;
 	
