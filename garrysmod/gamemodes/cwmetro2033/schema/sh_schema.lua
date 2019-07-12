@@ -16,13 +16,7 @@ for k, v in pairs(_file.Find("models/humans/group17/*.mdl", "GAME")) do
 	Clockwork.animation:AddMaleHumanModel("models/humans/group17/"..v);
 end;
 
-Clockwork.animation:AddCivilProtectionModel("models/police/eliteghostcp.mdl");
-Clockwork.animation:AddCivilProtectionModel("models/police/eliteshockcp.mdl");
-Clockwork.animation:AddCivilProtectionModel("models/police/leet_police2.mdl");
-Clockwork.animation:AddCivilProtectionModel("models/police/sect_police2.mdl");
-Clockwork.animation:AddCivilProtectionModel("models/police/policetrench.mdl");
-
-Clockwork.option:SetKey("default_date", {month = 1, year = 2016, day = 1});
+Clockwork.option:SetKey("default_date", {month = 3, year = 2033, day = 14});
 Clockwork.option:SetKey("default_time", {minute = 0, hour = 0, day = 1});
 Clockwork.option:SetKey("model_shipment", "models/items/item_item_crate.mdl");
 Clockwork.option:SetKey("intro_image", "hl2rp2/hl2rp2019");
