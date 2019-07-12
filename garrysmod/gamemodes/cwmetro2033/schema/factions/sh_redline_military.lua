@@ -6,6 +6,7 @@
 local FACTION = Clockwork.faction:New("Red Line - Military");
 
 FACTION.useFullName = true;
+FACTION.whitelist = true;
 FACTION.material = "hl2rp2/factions/citizen";
 FACTION.startingInv = {
 	["handheld_radio"] = 1
