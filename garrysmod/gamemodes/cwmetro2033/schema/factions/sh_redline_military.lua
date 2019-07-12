@@ -3,12 +3,12 @@
 	without permission of its author (kurozael@gmail.com).
 --]]
 
-local FACTION = Clockwork.faction:New("Red Line");
+local FACTION = Clockwork.faction:New("Red Line - Military");
 
 FACTION.useFullName = true;
 FACTION.material = "hl2rp2/factions/citizen";
 FACTION.startingInv = {
-	["cw_suitcase"] = 1
+	["handheld_radio"] = 1
 }
 FACTION.ranks = {
 	["Private"] = {
@@ -99,4 +99,4 @@ function FACTION:OnTransferred(player, faction, name)
 	end;
 end;
 
-FACTION_REDLINE = FACTION:Register();
+FACTION_REDLINE_MIL = FACTION:Register();
