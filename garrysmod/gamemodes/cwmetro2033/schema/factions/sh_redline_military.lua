@@ -15,72 +15,84 @@ FACTION.ranks = {
 	["Private"] = {
 		position = 12,
 		class = "Red Line - Enlisted",
-		model = ""
+		model = "",
+		displayRank = true
 	},
 	["Private First Class"] = {
 		position = 11,
 		class = "Red Line - Enlisted",
-		model = ""
+		model = "",
+		displayRank = true
 	},
 	["Junior Sergeant"] = {
 		position = 10,
 		class = "Red Line - Enlisted",
-		model = ""
+		model = "",
+		displayRank = true
 	},
 	["Sergeant"] = {
 		position = 9,
 		class = "Red Line - Non-Commissioned Officer",
-		model = ""
+		model = "",
+		displayRank = true
 	},
 	["Staff Sergeant"] = {
 		position = 8,
 		class = "Red Line - Non-Commissioned Officer",
-		model = ""
+		model = "",
+		displayRank = true
 	},
 	["Junior Lieutenant"] = {
 		position = 7,
 		class = "Red Line - Commissioned Officer",
-		model = ""
+		model = "",
+		displayRank = true
 	},
 	["Senior Lieutenant"] = {
 		position = 6,
 		class = "Red Line - Commissioned Officer",
-		model = ""
+		model = "",
+		displayRank = true
 	},
 	["Captain"] = {
 		position = 5,
 		class = "Red Line - Commissioned Officer",
 		model = "",
 		canPromote = 9,
-		canDemote = 8
+		canDemote = 8,
+		displayRank = true
 	},
 	["Major"] = {
 		position = 4,
 		class = "Red Line - Commissioned Officer",
 		model = "",
 		canPromote = 8,
-		canDemote = 7
+		canDemote = 7,
+		displayRank = true
 	},
 	["Lieutenant Colonel"] = {
 		position = 3,
 		class = "Red Line - Commissioned Officer",
 		model = "",
 		canPromote = 7,
-		canDemote = 6
+		canDemote = 6,
+		displayRank = true
 	},
 	["Colonel"] = {
 		position = 2,
 		class = "Red Line - Commissioned Officer",
 		model = "",
 		canPromote = 6,
-		canDemote = 5
+		canDemote = 5,
+		displayRank = true
 	},
 	["Major General"] = {
 		position = 1,
 		class = "Red Line - Commissioned Officer",
 		model = "",
 		canPromote = 3,
-		canDemote = 2
+		canDemote = 2,
+		displayRank = true
 	}
 };
 -- Called when a player is transferred to the faction.
