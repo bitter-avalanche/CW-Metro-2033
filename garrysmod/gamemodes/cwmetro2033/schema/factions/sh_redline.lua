@@ -6,6 +6,7 @@
 local FACTION = Clockwork.faction:New("Red Line - Civilian");
 
 FACTION.useFullName = true;
+FACTION.whitelist = true;
 FACTION.material = "hl2rp2/factions/citizen";
 FACTION.startingInv = {
 	["cw_suitcase"] = 1
