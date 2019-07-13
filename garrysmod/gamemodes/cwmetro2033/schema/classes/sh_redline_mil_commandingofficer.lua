@@ -9,4 +9,4 @@ local CLASS = Clockwork.class:New("Red Line - Commissioned Officer");
 	CLASS.wagesName = "Wages";
 	CLASS.description = "A soldier of the Red Line.";
 	CLASS.defaultPhysDesc = "Wearing dirty clothes.";
-CLASS_REDLINE_NCO = CLASS:Register();
+CLASS_REDLINE_CO = CLASS:Register();
