@@ -6,7 +6,7 @@
 local ITEM = Clockwork.item:New("clothes_base");
 
 ITEM.name = "Red Line Medium Armor";
-ITEM.uniqueID = "resistance_uniform";
+ITEM.uniqueID = "redline_mediumarmor";
 ITEM.weight = 3;
 --ITEM.protection = 0.1; // Uncommented because I don't know if this is necessary. - Lion
 ITEM.description = "A medium suit of armor, for those who want to be allround.";
