@@ -11,53 +11,63 @@ FACTION.material = "hl2rp2/factions/citizen";
 FACTION.startingInv = {
 	["handheld_radio"] = 1
 }
+
+FACTION.models = {
+	female = {
+		"models/arx/redline/red_line_soldier_2.mdl"
+	},
+	male = {
+		"models/arx/redline/red_line_soldier_2.mdl"
+	};
+};
+
 FACTION.ranks = {
 	["Private"] = {
 		position = 12,
 		class = "Red Line - Enlisted",
-		model = "",
+		model = "models/arx/redline/red_line_soldier_2.mdl",
 		displayRank = true
 	},
 	["Private First Class"] = {
 		position = 11,
 		class = "Red Line - Enlisted",
-		model = "",
+		model = "models/arx/redline/red_line_soldier_2.mdl",
 		displayRank = true
 	},
 	["Junior Sergeant"] = {
 		position = 10,
 		class = "Red Line - Enlisted",
-		model = "",
+		model = "models/arx/redline/red_line_soldier_2.mdl",
 		displayRank = true
 	},
 	["Sergeant"] = {
 		position = 9,
 		class = "Red Line - Non-Commissioned Officer",
-		model = "",
+		model = "models/arx/redline/red_line_soldier_2.mdl",
 		displayRank = true
 	},
 	["Staff Sergeant"] = {
 		position = 8,
 		class = "Red Line - Non-Commissioned Officer",
-		model = "",
+		model = "models/arx/redline/red_line_soldier_2.mdl",
 		displayRank = true
 	},
 	["Junior Lieutenant"] = {
 		position = 7,
 		class = "Red Line - Commissioned Officer",
-		model = "",
+		model = "models/arx/redline/red_line_soldier_6.mdl",
 		displayRank = true
 	},
 	["Senior Lieutenant"] = {
 		position = 6,
 		class = "Red Line - Commissioned Officer",
-		model = "",
+		model = "models/arx/redline/red_line_soldier_6.mdl",
 		displayRank = true
 	},
 	["Captain"] = {
 		position = 5,
 		class = "Red Line - Commissioned Officer",
-		model = "",
+		model = "models/arx/redline/red_line_soldier_3.mdl",
 		canPromote = 9,
 		canDemote = 8,
 		displayRank = true
@@ -65,7 +75,7 @@ FACTION.ranks = {
 	["Major"] = {
 		position = 4,
 		class = "Red Line - Commissioned Officer",
-		model = "",
+		model = "models/arx/redline/red_line_soldier_3.mdl",
 		canPromote = 8,
 		canDemote = 7,
 		displayRank = true
@@ -73,7 +83,7 @@ FACTION.ranks = {
 	["Lieutenant Colonel"] = {
 		position = 3,
 		class = "Red Line - Commissioned Officer",
-		model = "",
+		model = "models/arx/redline/red_line_officer_5.mdl",
 		canPromote = 7,
 		canDemote = 6,
 		displayRank = true
@@ -81,7 +91,7 @@ FACTION.ranks = {
 	["Colonel"] = {
 		position = 2,
 		class = "Red Line - Commissioned Officer",
-		model = "",
+		model = "models/arx/redline/red_line_officer_4.mdl",
 		canPromote = 6,
 		canDemote = 5,
 		displayRank = true
@@ -89,7 +99,7 @@ FACTION.ranks = {
 	["Major General"] = {
 		position = 1,
 		class = "Red Line - Commissioned Officer",
-		model = "",
+		model = "models/arx/redline/red_line_offcier_1.mdl",
 		canPromote = 3,
 		canDemote = 2,
 		displayRank = true
